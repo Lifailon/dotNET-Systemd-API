@@ -8,11 +8,11 @@ The goal is to demonstrate the ability of PowerShell to be operating system inde
 
 ## 🚀 Launch
 
-Dependencies:
+**Dependencies**:
 
 Only **[PowerShell Core](https://github.com/PowerShell/PowerShell)**
 
-Download the distribution from the official repository on GitHub and install it on your system, here is an example for Ubuntu:
+Download latest version the distribution from the official repository on GitHub and install it on your system, here is an example for Ubuntu:
 
 ```Bash
 deb_latest=$(curl https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -Eom 1 "https://.+.deb")
@@ -43,30 +43,30 @@ Basic authentication scheme is used on the basis of **Base64**.
 For authorization it is necessary to pass the login and password in Base64 format to the server in the **variable $cred**. To get the login and password in Base64 format, use the construct:
 
 ```PowerShell
-PS C:\Users\Lifailon> $user = "rest"
-PS C:\Users\Lifailon> $pass = "api"
-PS C:\Users\Lifailon> [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("${user}:${pass}"))
+$user = "rest"
+$pass = "api"
+[System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("${user}:${pass}"))
 ```
 
-For client connectivity, use one of the designs:
+**For client connectivity, use one of the designs**:
 
 ```PowerShell
-PS C:\Users\Lifailon> $user = "rest"
-PS C:\Users\Lifailon> $pass = "api"
-PS C:\Users\Lifailon> $SecureString = ConvertTo-SecureString $pass -AsPlainText -Force
-PS C:\Users\Lifailon> $Credential = New-Object System.Management.Automation.PSCredential($user, $SecureString)
-PS C:\Users\Lifailon> #$Credential = Get-Credential
-PS C:\Users\Lifailon> Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron
+$user = "rest"
+$pass = "api"
+$SecureString = ConvertTo-SecureString $pass -AsPlainText -Force
+$Credential = New-Object System.Management.Automation.PSCredential($user, $SecureString)
+#$Credential = Get-Credential
+Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron
 ```
 
 2nd option, using header:
 
 ```PowerShell
-PS C:\Users\Lifailon> $user = "rest"
-PS C:\Users\Lifailon> $pass = "api"
-PS C:\Users\Lifailon> $EncodingCred = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("${user}:${pass}"))
-PS C:\Users\Lifailon> $Headers = @{"Authorization" = "Basic ${EncodingCred}"}
-PS C:\Users\Lifailon> Invoke-RestMethod -Headers $Headers -Uri http://192.168.3.104:8080/api/service/cron
+$user = "rest"
+$pass = "api"
+$EncodingCred = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("${user}:${pass}"))
+$Headers = @{"Authorization" = "Basic ${EncodingCred}"}
+Invoke-RestMethod -Headers $Headers -Uri http://192.168.3.104:8080/api/service/cron
 ```
 
 The server will match the credentials received in the header request from the client.
@@ -119,12 +119,6 @@ Output the state of physical disks (lsblk is used):
 
 ## ⚠️ Error Handling
 
-In case your login or password is incorrect, you will receive the following message.
-
-**401, Unauthorized**:
-
-`Invoke-RestMethod: Unauthorized (login or password is invalid)`
-
 If the service name is incorrect or the service does not exist, you will receive a message.
 
 **400. Bad Request**:
@@ -133,6 +127,12 @@ If the service name is incorrect or the service does not exist, you will receive
 PS C:\Users\Lifailon> Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cronn
 Invoke-RestMethod: Bad Request (service cronn could not be found)
 ```
+
+In case your login or password is incorrect, you will receive the following message.
+
+**401, Unauthorized**:
+
+`Invoke-RestMethod: Unauthorized (login or password is invalid)`
 
 **404. Not Found endpoint**:
 
