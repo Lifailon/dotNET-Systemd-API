@@ -75,7 +75,14 @@ The server will match the credentials received in the header request from the cl
 
 To obtain specific service status:
 
-`Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron`
+```PowerShell
+PS C:\Users\Lifailon> Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron | Format-List                                       
+
+Loaded : loaded (/lib/systemd/system/cron.service; enabled; vendor preset: enabled)
+Active : active (running) since Sun 2023-10-15 20:57:43 MSK; 1h 23min ago
+Tasks  : 1 (limit: 2220)
+Memory : 2.2M
+```
 
 To get a list of all registered unit services:
 
