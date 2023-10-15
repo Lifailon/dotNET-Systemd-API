@@ -15,12 +15,13 @@ $EncodingCred = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.Ge
 $Headers = @{"Authorization" = "Basic ${EncodingCred}"}
 Invoke-RestMethod -Headers $Headers -Uri http://192.168.3.104:8080/api/service/cron
 # GET Request:
-Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron   # wildcard format
-Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service        # all service list
+Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron
+Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service
 Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service-status
 # POST Request:
 Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron -Method Post -Headers @{"Status" = "Stop"}
 Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron -Method Post -Headers @{"Status" = "Start"}
+Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron -Method Post -Headers @{"Status" = "Restart"}
 # Other endpoints:
 Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/process
 Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/process
@@ -148,7 +149,7 @@ elseif ($context.Request.HttpMethod -eq "GET" -and $context.Request.RawUrl -matc
     # Get status service and convert to JSON
     $GetService = Get-ServiceJson -ServiceName $ServiceName
     if ($GetService -match "could not be found") {
-        $GetService = "Bad Request (service could not be found)"
+        $GetService = "Bad Request (service $ServiceName could not be found)"
         $Code = 400
     }
     else {
@@ -165,7 +166,7 @@ elseif ($context.Request.HttpMethod -eq "POST" -and $context.Request.RawUrl -mat
     # Check Service
     $GetService = systemctl status $ServiceName 2>&1
     if ($GetService -match "could not be found") {
-        $GetService = "Bad Request (service could not be found)"
+        $GetService = "Bad Request (service $ServiceName could not be found)"
         $Code = 400
     }
     else {
