@@ -118,11 +118,46 @@ Get a list of all processes with a detailed description of all characteristics i
 
 Get current uptime and average load:
 
-`Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/uptime`
+```PowerShell
+PS C:\Users\Lifailon> Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/uptime | Format-List
+
+Uptime : 22:26:54 up 1 day
+Users  : 2
+avg    : 0.35 0.21 0.19
+```
 
 Output the state of physical disks (lsblk is used):
 
-`Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/disk`
+```PowerShell
+PS C:\Users\Lifailon> $(Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication 
+-Uri http://192.168.3.104:8080/api/disk).blockdevices.children
+
+name       : sda1
+maj:min    : 8:1
+rm         : False
+size       : 1M
+ro         : False
+type       : part
+mountpoint : 
+
+name       : sda2
+maj:min    : 8:2
+rm         : False
+size       : 1G
+ro         : False
+type       : part
+mountpoint : /boot
+
+name       : sda3
+maj:min    : 8:3
+rm         : False
+size       : 49G
+ro         : False
+type       : part
+mountpoint : 
+children   : {@{name=ubuntu--vg-ubuntu--lv; maj:min=253:0; rm=False; size=49G; ro=False; type=lvm 
+             ; mountpoint=/}}
+```
 
 ## ⚠️ Error Handling
 
@@ -137,9 +172,11 @@ Invoke-RestMethod: Bad Request (service cronn could not be found)
 
 In case your login or password is incorrect, you will receive the following message.
 
-**401, Unauthorized**:
+**401. Unauthorized**:
 
-`Invoke-RestMethod: Unauthorized (login or password is invalid)`
+```PowerShell
+Invoke-RestMethod: Unauthorized (login or password is invalid)
+```
 
 **404. Not Found endpoint**:
 
