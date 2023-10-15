@@ -31,7 +31,29 @@ $cred = "cmVzdDphcGk="
 
 Open the specified network port in your firewall.
 
-Start:
+**Uncomplicated Firewall**:
+
+```
+ufw allow in 8080
+ufw reload
+```
+
+**iptables**:
+
+```
+iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
+iptables-save
+```
+
+**FirewallD**:
+
+```
+firewall-cmd --permanent --add-port=8080/tcp
+firewall-cmd --reload
+```
+
+
+**Start the server**: \
 `powershell systemctl-api.ps1`
 
 Warning: **use root privileges** to start the server if you need to manage services via POST requests.
