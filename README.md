@@ -1,14 +1,25 @@
 # Systemctl-API
 
-Set of endpoints for managing Linux services. REST API server **is based .NET HttpListener** with authorization and error handling. \
-The goal is to demonstrate the ability of PowerShell to be operating system independent and used concurrently with the Bash language. It was also prompted by the impossibility to create a full-fledged server for REST API using standard means of Bash or netcat.
+Set of endpoints for managing Linux services. REST API server **is based .NET HttpListener** with authorization and error handling.
 
-Dependencies: \
-Only **PowerShell Core**
+The goal is to demonstrate the ability of PowerShell to be operating system independent (cross-platform) and used concurrently with the Bash language. It was also prompted by the impossibility to create a full-fledged server for REST API using standard means of Bash or netcat.
 
 ![Image alt](https://github.com/Lifailon/Systemctl-API/blob/rsa/Example.gif)
 
 ## 🚀 Launch
+
+Dependencies:
+
+Only **[PowerShell Core](https://github.com/PowerShell/PowerShell)**
+
+Download the distribution from the official repository on GitHub and install it on your system, here is an example for Ubuntu:
+
+```Bash
+deb_latest=$(curl https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -Eom 1 "https://.+.deb")
+curl -LO $deb_latest
+deb_name=$(echo $deb_latest | awk -F / '{print $NF}')
+dpkg -i $deb_name
+```
 
 Set variables:
 ```Bash
