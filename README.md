@@ -1,10 +1,10 @@
-# Systemctl-API
+# dotNET-Systemd-API
 
-Set of endpoints for managing Linux services. REST API server **is based .NET HttpListener** with authorization and error handling.
+Set of endpoints for managing Linux services via **systemctl (systemd)**. Cross-platform REST API server **is based .NET HttpListener** with base authorization and error handling.
 
-The goal is to demonstrate the ability of PowerShell to be operating system independent (cross-platform) and used concurrently with the Bash language. It was also prompted by the impossibility to create a full-fledged server for REST API using standard means of Bash or netcat.
+The goal is to demonstrate the ability of PowerShell to be operating system independent and used concurrently with the Bash language. It was also prompted by the impossibility to create a full-fledged server for REST API using standard means of Bash language and netcat.
 
-![Image alt](https://github.com/Lifailon/Systemctl-API/blob/rsa/Example.gif)
+![Image alt](https://github.com/Lifailon/dotNET-Systemd-API/blob/rsa/Example.gif)
 
 ## 🚀 Launch
 
