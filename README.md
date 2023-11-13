@@ -1,8 +1,8 @@
 # dotNET-Systemd-API
 
-Set of endpoints for managing Linux services via **systemctl (systemd)**. Cross-platform REST API server **is based .NET HttpListener** with base authorization and error handling.
+Set of endpoints for managing Linux services via **systemctl (systemd)**. Cross-platform REST API server **is based .NET HttpListener and PowerShell** with base authorization and error handling.
 
-The goal is to demonstrate the ability of PowerShell to be operating system independent and used concurrently with the Bash language. It was also prompted by the impossibility to create a full-fledged server for REST API using standard means of Bash language and netcat.
+The goal is to demonstrate the ability of **PowerShell to be operating system independent** and used concurrently with the Bash language 🐧. It was also prompted by the impossibility to create a full-fledged server for REST API using standard means of Bash language and netcat.
 
 ![Image alt](https://github.com/Lifailon/dotNET-Systemd-API/blob/rsa/Example.gif)
 
@@ -114,7 +114,7 @@ To get the list of all registered unit services with their operation status (wor
 
 `Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service-status`
 
-## 🎊 POST Request
+## 💎 POST Request
 
 **Stop** the service:
 
@@ -128,7 +128,7 @@ To get the list of all registered unit services with their operation status (wor
 
 `Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron -Method Post -Headers @{"Status" = "Restart"}`
 
-## 💎 Other Endpoints
+## 🎊 Other Endpoints
 
 Get a list of all processes with a detailed description of all characteristics in **html format**:
 
@@ -202,14 +202,14 @@ Invoke-RestMethod: Unauthorized (login or password is invalid)
 
 **404. Not Found endpoint**:
 
-```
-Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api
+```PowerShell
+PS C:\Users\Lifailon> Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api
 Invoke-RestMethod: Not Found endpoint
 ```
 
 **405. Method Not Allowed**:
 
-```
+```PowerShell
 PS C:\Users\Lifailon> Invoke-RestMethod -Credential $Credential -AllowUnencryptedAuthentication -Uri http://192.168.3.104:8080/api/service/cron -Method Put -Headers @{"Status" = "Restart"} | fl   
 Invoke-RestMethod: Method Not Allowed
 ```
